@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-// 1-класс (негізгі, main.java осы жерде)
+// 1-класс (негізгі, main.java.java осы жерде)
 public class fclass1 {
 
     int a, b;
