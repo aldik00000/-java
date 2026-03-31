@@ -1,25 +1,52 @@
-public class Task11 {
-    public static void main(String[] args) {
-        int[] A = new int[25];
+import javax.swing.*;
+import java.awt.*;
 
-        for (int i = 0; i < 25; i++) {
-            A[i] = (int)(Math.random() * 100);
-            System.out.print(A[i] + " ");
+public class Task11 extends JPanel {
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2=(Graphics2D)g;
+
+        int width=getWidth();
+        int height=getHeight();
+
+        int centerX=width/2;
+        int centerY=height/2;
+
+        g2.drawLine(0,centerY,width,centerY);
+        g2.drawLine(centerX,0,centerX,height);
+
+        int prevX=0;
+        int prevY=0;
+        boolean first=true;
+
+        for(double x=-10;x<=10;x+=0.05){
+
+            double y=x*x-3*x-2;
+
+            int drawX=centerX+(int)(x*30);
+            int drawY=centerY-(int)(y*20);
+
+            if(!first){
+                g2.drawLine(prevX,prevY,drawX,drawY);
+            }
+
+            prevX=drawX;
+            prevY=drawY;
+            first=false;
         }
+    }
 
-        int minIndex = 0, maxIndex = 0;
+    public static void main(String[] args){
 
-        for (int i = 1; i < 25; i++) {
-            if (A[i] < A[minIndex]) minIndex = i;
-            if (A[i] > A[maxIndex]) maxIndex = i;
-        }
+        JFrame frame=new JFrame("y = x^2 - 3x - 2");
 
-        int temp = A[minIndex];
-        A[minIndex] = A[maxIndex];
-        A[maxIndex] = temp;
-
-        System.out.println("\n\nАуыстырылғаннан кейін:");
-        for (int i = 0; i < 25; i++)
-            System.out.print(A[i] + " ");
+        frame.add(new Task11());
+        frame.setSize(600,600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
+
+

@@ -1,25 +1,53 @@
-public class Task7 {
-    public static void main(String[] args) {
-        double[][] B = new double[5][5];
-        double[] A = new double[5];
+import javax.swing.*;
+import java.awt.*;
 
-        System.out.println("B матрицасы:");
-        for (int i = 0; i < 5; i++) {
-            double sum = 0;
-            for (int j = 0; j < 5; j++) {
-                B[i][j] = Math.random() * 20 - 10; // -10..10
-                System.out.print(B[i][j] + "\t");
-                if (B[i][j] > 0) {
-                    sum += B[i][j];
-                }
+public class Task7 extends JPanel {
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2=(Graphics2D)g;
+
+        int w=getWidth();
+        int h=getHeight();
+
+        int cx=w/2;
+        int cy=h/2;
+
+        g2.drawLine(0,cy,w,cy);
+        g2.drawLine(cx,0,cx,h);
+
+        int prevX=0;
+        int prevY=0;
+        boolean first=true;
+
+        for(double x=-10;x<=10;x+=0.05){
+
+            double y=Math.cos(x-1)+x;
+
+            int drawX=cx+(int)(x*30);
+            int drawY=cy-(int)(y*30);
+
+            if(!first){
+                g2.drawLine(prevX,prevY,drawX,drawY);
             }
-            A[i] = sum;
-            System.out.println();
-        }
 
-        System.out.println("\nҚатар бойынша оң элементтердің қосындысы:");
-        for (int i = 0; i < 5; i++) {
-            System.out.println("A[" + i + "] = " + A[i]);
+            prevX=drawX;
+            prevY=drawY;
+            first=false;
         }
     }
+
+    public static void main(String[] args){
+
+        JFrame frame=new JFrame("y = cos(x-1) + x");
+
+        frame.add(new Task7());
+        frame.setSize(600,600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
 }
+
+
+

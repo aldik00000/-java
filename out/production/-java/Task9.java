@@ -1,28 +1,50 @@
-public class Task9 {
-    public static void main(String[] args) {
-        int[][] C = new int[5][5];
-        int product = 1;
-        boolean hasPositive = false;
+import javax.swing.*;
+import java.awt.*;
 
-        System.out.println("Матрица:");
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                C[i][j] = (int) (Math.random() * 20 - 10);
-                System.out.print(C[i][j] + "\t");
-            }
-            System.out.println();
+public class Task9 extends JPanel {
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2=(Graphics2D)g;
+
+        int w=getWidth();
+        int h=getHeight();
+
+        int cx=w/2;
+        int cy=h/2;
+
+        g2.drawLine(0,cy,w,cy);
+        g2.drawLine(cx,0,cx,h);
+
+        int prevX=0, prevY=0;
+        boolean first=true;
+
+        for(double x=-10;x<=10;x+=0.05){
+
+            if(x==2) continue;
+
+            double y=(x+3)/(x-2);
+
+            int drawX=cx+(int)(x*30);
+            int drawY=cy-(int)(y*30);
+
+            if(!first)
+                g2.drawLine(prevX,prevY,drawX,drawY);
+
+            prevX=drawX;
+            prevY=drawY;
+            first=false;
         }
+    }
 
-        for (int i = 0; i < 5; i++) {
-            if (C[i][i] > 0) {
-                product *= C[i][i];
-                hasPositive = true;
-            }
-        }
+    public static void main(String[] args){
 
-        if (hasPositive)
-            System.out.println("\nНегізгі диагональдың оң элементтер көбейтіндісі: " + product);
-        else
-            System.out.println("\nОң элемент жоқ.");
+        JFrame f=new JFrame("y=(x+3)/(x-2)");
+        f.add(new Task9());
+        f.setSize(600,600);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
     }
 }
+

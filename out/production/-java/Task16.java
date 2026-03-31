@@ -1,24 +1,50 @@
-public class Task16 {
+import javax.swing.*;
+import java.awt.*;
 
-    public static int maxX() {
-        int[] array = new int[10];
-        int max;
+public class Task16 extends JPanel {
 
-        for (int i = 0; i < 10; i++) {
-            array[i] = (int)(Math.random() * 100);
-            System.out.print(array[i] + " ");
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        int width = getWidth();
+        int height = getHeight();
+
+        int centerX = width / 2;
+        int centerY = height / 2;
+
+        g2.drawLine(0, centerY, width, centerY);
+        g2.drawLine(centerX, 0, centerX, height);
+
+        int prevX=0, prevY=0;
+        boolean first=true;
+
+        for(double x=-10; x<=10; x+=0.05){
+
+            if(x==0) continue;
+
+            double y = (x*x + x + 2)/x;
+
+            int drawX = centerX + (int)(x*30);
+            int drawY = centerY - (int)(y*5);
+
+            if(!first) g2.drawLine(prevX, prevY, drawX, drawY);
+
+            prevX = drawX;
+            prevY = drawY;
+            first=false;
         }
-
-        max = array[0];
-        for (int i = 1; i < 10; i++) {
-            if (array[i] > max)
-                max = array[i];
-        }
-
-        return max;
     }
 
-    public static void main(String[] args) {
-        System.out.println("\nМаксималды элемент: " + maxX());
+    public static void main(String[] args){
+        JFrame frame = new JFrame("y = (x^2 + x + 2)/x");
+        frame.add(new Task16());
+        frame.setSize(600,600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
+
+
+

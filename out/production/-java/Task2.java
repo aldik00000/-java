@@ -1,14 +1,49 @@
-public class Task2 {
-    public static void main(String[] args) {
-        int[] B = new int[15];
-        int sum = 0;
+import javax.swing.*;
+import java.awt.*;
 
-        for (int i = 0; i < 15; i++) {
-            B[i] = (int)(Math.random() * 40 - 20);
-            System.out.print(B[i] + " ");
-            if (B[i] > 0) sum += B[i];
+public class Task2 extends JPanel {
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        int w = getWidth();
+        int h = getHeight();
+
+        int cx = w/2;
+        int cy = h/2;
+
+        g2.drawLine(0, cy, w, cy);
+        g2.drawLine(cx, 0, cx, h);
+
+        int prevX=0, prevY=0;
+        boolean first=true;
+
+        for(double x=-10;x<=10;x+=0.05){
+
+            double y = 3*x*x;
+
+            int drawX = cx + (int)(x*30);
+            int drawY = cy - (int)(y*10);
+
+            if(!first)
+                g2.drawLine(prevX,prevY,drawX,drawY);
+
+            prevX=drawX;
+            prevY=drawY;
+            first=false;
         }
+    }
 
-        System.out.println("\nОң элементтер қосындысы: " + sum);
+    public static void main(String[] args){
+
+        JFrame f=new JFrame("y = 3x^2");
+        f.add(new Task2());
+        f.setSize(600,600);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setVisible(true);
     }
 }
+
+

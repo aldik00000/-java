@@ -1,21 +1,53 @@
-public class Task4 {
-    public static void main(String[] args) {
-        double[] C = new double[25];
-        double product = 1;
-        boolean hasPositive = false;
+import javax.swing.*;
+import java.awt.*;
 
-        for (int i = 0; i < 25; i++) {
-            C[i] = Math.random() * 20 - 10;
-            System.out.print(C[i] + " ");
-            if (C[i] > 0) {
-                product *= C[i];
-                hasPositive = true;
+public class Task4 extends JPanel {
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2=(Graphics2D)g;
+
+        int width=getWidth();
+        int height=getHeight();
+
+        int centerX=width/2;
+        int centerY=height/2;
+
+        g2.drawLine(0,centerY,width,centerY);
+        g2.drawLine(centerX,0,centerX,height);
+
+        int prevX=0;
+        int prevY=0;
+        boolean first=true;
+
+        for(double x=-10;x<=10;x+=0.05){
+
+            double y=x*x*x+x*x+x;
+
+            int drawX=centerX+(int)(x*30);
+            int drawY=centerY-(int)(y*5);
+
+            if(!first){
+                g2.drawLine(prevX,prevY,drawX,drawY);
             }
-        }
 
-        if (hasPositive)
-            System.out.println("\nОң элементтер көбейтіндісі: " + product);
-        else
-            System.out.println("\nОң элемент жоқ.");
+            prevX=drawX;
+            prevY=drawY;
+            first=false;
+        }
+    }
+
+    public static void main(String[] args){
+
+        JFrame frame=new JFrame("y = x^3 + x^2 + x");
+
+        frame.add(new Task4());
+        frame.setSize(600,600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
+
+
+

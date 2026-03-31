@@ -1,31 +1,52 @@
-public class Task8 {
-    public static void main(String[] args) {
-        double[][] A = new double[12][6];
+import javax.swing.*;
+import java.awt.*;
 
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 6; j++) {
-                A[i][j] = Math.random() * 20 - 10;
-                System.out.print(A[i][j] + "\t");
+public class Task8 extends JPanel {
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        Graphics2D g2=(Graphics2D)g;
+
+        int w=getWidth();
+        int h=getHeight();
+
+        int cx=w/2;
+        int cy=h/2;
+
+        g2.drawLine(0,cy,w,cy);
+        g2.drawLine(cx,0,cx,h);
+
+        int prevX=0;
+        int prevY=0;
+        boolean first=true;
+
+        for(double x=-10;x<=10;x+=0.05){
+
+            if(x==0) continue;
+
+            double y=1/x;
+
+            int drawX=cx+(int)(x*40);
+            int drawY=cy-(int)(y*40);
+
+            if(!first){
+                g2.drawLine(prevX,prevY,drawX,drawY);
             }
-            System.out.println();
+
+            prevX=drawX;
+            prevY=drawY;
+            first=false;
         }
+    }
 
-        System.out.println("\nБағана бойынша теріс көбейтінді:");
-        for (int j = 0; j < 6; j++) {
-            double product = 1;
-            boolean hasNegative = false;
+    public static void main(String[] args){
 
-            for (int i = 0; i < 12; i++) {
-                if (A[i][j] < 0) {
-                    product *= A[i][j];
-                    hasNegative = true;
-                }
-            }
+        JFrame frame=new JFrame("y = 1/x");
 
-            if (hasNegative)
-                System.out.println("Бағана " + j + ": " + product);
-            else
-                System.out.println("Бағана " + j + ": Теріс элемент жоқ");
-        }
+        frame.add(new Task8());
+        frame.setSize(600,600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }
