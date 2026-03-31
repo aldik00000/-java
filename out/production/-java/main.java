@@ -1,27 +1,14 @@
-import java.util.Scanner;
-
-public class  main {
+public class main {
     public static void main(String[] args) {
+        int[] A = new int[20];
+        int sum = 0;
 
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("x мәнін енгізіңіз: ");
-        double x = input.nextDouble();
-
-        double f;
-
-        if (x >= 2.5) {
-            f = 3 * x + 5;
-        }
-        else if (x >= 1.5 && x < 2.5) {
-            f = Math.pow(x, 3) * Math.sin(x);
-        }
-        else {
-            f = x * Math.tan(x) - Math.sin(x);
+        for (int i = 0; i < 20; i++) {
+            A[i] = (int)(Math.random() * 40 - 20);
+            System.out.print(A[i] + " ");
+            if (A[i] < 0) sum += A[i];
         }
 
-        System.out.println("f(x) = " + f);
-
-        input.close();
+        System.out.println("\nТеріс элементтер қосындысы: " + sum);
     }
 }
