@@ -11,7 +11,10 @@
       <sourceFolder url="file://$MODULE_DIR$/lab8" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/lab9" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/lab10" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/lab11" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/lab11" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/lab12" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/lab13" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/СӨЖ 2 9 Мәтін анализаторы" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

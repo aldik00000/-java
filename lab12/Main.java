@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        String text = "Salem 123 Alem qalai 2026";
+        String text = "aldiyar is 25-11 tipo";
 
         // Тапсырма 1: Дауысты және дауыссыз әріптер санын табу
         int vowels = 0, consonants = 0;

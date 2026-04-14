@@ -1,58 +1,77 @@
-import javax.swing.*;
-import java.awt.*;
+import java.util.*; // Scanner, HashMap, ArrayList сияқты дайын құралдарды қолдану
 
-public class main extends JPanel {
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-
-        int width = getWidth();
-        int height = getHeight();
-
-        int centerX = width / 2;
-        int centerY = height / 2;
-
-        // Осьтер
-        g2.drawLine(0, centerY, width, centerY);
-        g2.drawLine(centerX, 0, centerX, height);
-
-        // k = 0.1 ... 1
-        for(double k = 0.1; k <= 1.0; k += 0.1){
-
-            int prevX = 0;
-            int prevY = 0;
-            boolean first = true;
-
-            for(double x = -10; x <= 10; x += 0.1){
-
-                double y = k * x;
-
-                int drawX = centerX + (int)(x * 30);
-                int drawY = centerY - (int)(y * 30);
-
-                if(!first){
-                    g2.drawLine(prevX, prevY, drawX, drawY);
-                }
-
-                prevX = drawX;
-                prevY = drawY;
-                first = false;
-            }
-        }
-    }
-
+public class Main {
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("y = kx Graph");
+        // Пайдаланушыдан мәтін алу үшін Scanner
+        Scanner scanner = new Scanner(System.in);
 
-        main panel = new main();
+        System.out.println("Мәтін енгізіңіз:");
+        String text = scanner.nextLine(); // толық жолды оқу
 
-        frame.add(panel);
-        frame.setSize(600,600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        // Егер мәтін бос болса – бағдарлама тоқтайды
+        if (text.trim().isEmpty()) {
+            System.out.println("❌ Қате: Мәтін бос!");
+            return;
+        }
+
+        // Барлық әріптерді кіші әріпке айналдыру
+        text = text.toLowerCase();
+
+        // Мәтінді сөздерге бөлу (бос орын, үтір, нүкте арқылы)
+        String[] words = text.split("\\W+");
+
+        // Сөздердің жиілігін сақтау үшін карта (сөз - саны)
+        HashMap<String, Integer> wordCount = new HashMap<>();
+
+        int totalWords = 0; // жалпы сөз саны
+
+        // Әр сөзді қарап, санау
+        for (String word : words) {
+            if (word.isEmpty()) continue; // бос сөздерді өткізіп жіберу
+
+            // Егер сөз бар болса +1, болмаса 1 деп қосу
+            wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+            totalWords++;
+        }
+
+        // Бірегей (қайталанбайтын) сөздер саны
+        int uniqueWords = wordCount.size();
+
+        // Ең жиі кездесетін сөзді табу
+        String mostFrequentWord = "";
+        int maxCount = 0;
+
+        for (Map.Entry<String, Integer> entry : wordCount.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                maxCount = entry.getValue();
+                mostFrequentWord = entry.getKey();
+            }
+        }
+
+        // Сөздерді жиілігі бойынша сұрыптау (кему ретімен)
+        List<Map.Entry<String, Integer>> sortedList =
+                new ArrayList<>(wordCount.entrySet());
+
+        sortedList.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+
+        // Нәтижені шығару
+        System.out.println("\n📊 Статистика:");
+        System.out.println("Жалпы сөз саны: " + totalWords);
+        System.out.println("Бірегей сөздер: " + uniqueWords);
+
+        // Ең жиі сөз
+        if (maxCount > 0) {
+            System.out.println("Ең жиі сөз: " + mostFrequentWord + " (" + maxCount + " рет)");
+        }
+
+        // Барлық сөздердің жиілігін шығару
+        System.out.println("\n📌 Сөздердің жиілігі:");
+        for (Map.Entry<String, Integer> entry : sortedList) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+
+        // Scanner жабу (ресурсты босату)
+        scanner.close();
     }
 }
-
